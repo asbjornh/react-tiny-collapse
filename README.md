@@ -1,6 +1,7 @@
 # react-tiny-collapse
 
 [![npm version](https://img.shields.io/npm/v/react-tiny-collapse.svg?style=flat)](https://www.npmjs.com/package/react-tiny-collapse)
+[![build status](https://travis-ci.org/asbjornh/react-tiny-collapse.svg?branch=master)](https://travis-ci.org/asbjornh/react-tiny-collapse)
 
 TinyCollapse is a lightweight component for making animated expand / collapse components. It measures the height and applies it inline so you can add a transition (works when children change too).
 
@@ -10,7 +11,7 @@ TinyCollapse needs `requestAnimationFrame` in order to do its thing, so make sur
 
 
 ### Why it exists
-I really like [react-collapse](https://github.com/nkbt/react-collapse) and I've used it a lot. It does have some drawbacks though, such as being dependent on [react-motion](https://github.com/chenglou/react-motion) and not playing nice with server side rendering (as of v4). I wanted to create a more lightweight alternative.
+I really like [react-collapse](https://github.com/nkbt/react-collapse) and I've used it a lot. It does have some drawbacks though, such as being dependent on [react-motion](https://github.com/chenglou/react-motion) and not playing nice with server side rendering (as of v4). I wanted to create a more lightweight, dependency-free alternative.
 
 ### Other Tiny libraries
 
@@ -48,7 +49,8 @@ import TinyCollapse from "react-tiny-collapse";
 | `animateChildren` | Boolean  | true      | Animates height when children changes (set to `false` when nesting collapses)
 | `children`   | React element |           | Single React element
 | `component`  | String        | "div"     | Type of element used for the wrapper node
-| `duration`   | Number        | 500       | The duration of your css transition (milliseconds)
+| `duration`   | Number        | 500       | Transition duration (milliseconds)
+| `easing`     | String        | `cubic-bezier(0.3,0,0,1)` | CSS easing
 | `forceInitialAnimation` | Boolean | false | Force animation when TinyCollapse mounts
 | `isOpen`     | Boolean  | true    | Shows or hides the content
 | `unmountClosed` | Boolean | true   | Unmounts children when closed
@@ -61,16 +63,6 @@ import TinyCollapse from "react-tiny-collapse";
 </TinyCollapse>
 ```
 
-
-#### CSS example:
-
-TinyCollapse will only measure and set the height. Transitions must be added with css (`overflow: hidden` and `visibility: hidden` will be added inline when closed or animating)
-
-```css
-.collapse {
-  transition: height 0.5s;
-}
-```
 
 #### Nested TinyCollapse
 

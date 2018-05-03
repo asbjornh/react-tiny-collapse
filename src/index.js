@@ -7,8 +7,9 @@ class Collapse extends React.Component {
     children: PropTypes.node,
     className: PropTypes.string,
     component: PropTypes.string,
-    forceInitialAnimation: PropTypes.bool,
     duration: PropTypes.number,
+    easing: PropTypes.string,
+    forceInitialAnimation: PropTypes.bool,
     isOpen: PropTypes.bool,
     unmountClosed: PropTypes.bool
   };
@@ -17,15 +18,18 @@ class Collapse extends React.Component {
     animateChildren: true,
     component: "div",
     duration: 500,
+    easing: "cubic-bezier(0.3,0,0,1)",
     forceInitialAnimation: false,
     isOpen: false,
     unmountClosed: true
   };
 
   state = {
-    height: this.props.forceInitialAnimation ? 0 : "",
+    children: this.props.children,
+    height: this.props.forceInitialAnimation || !this.props.isOpen ? 0 : null,
     isAnimating: false,
-    isMounted: false
+    isMounted: false,
+    isOpen: this.props.isOpen
   };
 
   previousHeight = 0;
@@ -34,7 +38,7 @@ class Collapse extends React.Component {
 
   getHeight = () => {
     const child = this.wrapper && this.wrapper.firstElementChild;
-    return child ? child.offsetHeight - 1 : 0; // - 1px to avoid jump after transition
+    return child ? Math.max(child.offsetHeight - 1, 0) : 0; // - 1px to avoid jump after transition
   };
 
   transition = () => {
@@ -43,13 +47,13 @@ class Collapse extends React.Component {
     clearTimeout(this.timer);
     cancelAnimationFrame(this.raf);
     this.setState({ height: this.previousHeight }, () => {
-      // this.previousHeight = newHeight;
+      this.previousHeight = newHeight;
       this.raf = requestAnimationFrame(() => {
         this.raf = requestAnimationFrame(() => {
           this.setState({ height: newHeight }, () => {
             this.timer = setTimeout(() => {
               this.setState({
-                height: this.props.isOpen ? "" : 0,
+                height: this.props.isOpen ? null : 0,
                 isAnimating: false
               });
             }, this.props.duration);
@@ -62,7 +66,7 @@ class Collapse extends React.Component {
   componentDidMount() {
     this.setState({ isMounted: true }, () => {
       if (this.props.forceInitialAnimation) {
-        this.transition(this.props.children);
+        this.transition();
       } else {
         this.previousHeight = this.props.isOpen ? this.getHeight() : 0;
         this.setState({ isAnimating: false });
@@ -75,12 +79,17 @@ class Collapse extends React.Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    const childrenDidChange = nextProps.children !== prevState.children;
+    const openDidChange = nextProps.isOpen !== prevState.isOpen;
+
     return {
       children: nextProps.children,
       isAnimating:
-        prevState.isMounted &&
-        nextProps.children !== prevState.children &&
-        (nextProps.animateChildren || nextProps.isOpen !== prevState.isOpen),
+        (!prevState.isMounted &&
+          nextProps.forceInitialAnimation &&
+          nextProps.isOpen) ||
+        (nextProps.animateChildren && childrenDidChange) ||
+        openDidChange,
       isOpen: nextProps.isOpen
     };
   }
@@ -101,9 +110,10 @@ class Collapse extends React.Component {
   }
 
   render() {
-    const { isAnimating } = this.state;
-    const { isOpen, unmountClosed } = this.props;
+    const { isAnimating, isMounted } = this.state;
+    const { forceInitialAnimation, isOpen, unmountClosed } = this.props;
     const shouldMount = unmountClosed ? isOpen || isAnimating : true;
+    const initiallyHidden = !isMounted && forceInitialAnimation && isOpen;
 
     return React.createElement(
       this.props.component,
@@ -113,8 +123,13 @@ class Collapse extends React.Component {
         ref: el => (this.wrapper = el),
         style: {
           height: this.state.height,
-          overflow: isAnimating || !isOpen ? "hidden" : "",
-          visibility: !isAnimating && !isOpen ? "hidden" : ""
+          overflow: isAnimating || !isOpen || initiallyHidden ? "hidden" : null,
+          visibility:
+            (!isAnimating && !isOpen) || initiallyHidden ? "hidden" : null,
+          transition:
+            isAnimating || initiallyHidden
+              ? `height ${this.props.duration}ms ${this.props.easing}`
+              : null
         }
       },
       shouldMount && this.props.children

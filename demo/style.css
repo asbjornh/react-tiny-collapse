@@ -12,8 +12,6 @@ html {
 }
 
 .collapse {
-  transition: height 0.5s cubic-bezier(0.36, 0.06, 0, 1);
-
   background-color: #4b9be2;
   box-shadow: 0 10px 50px rgba(75, 155, 226, 0.5);
   color: white;
