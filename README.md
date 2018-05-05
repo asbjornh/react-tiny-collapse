@@ -19,22 +19,16 @@ I really like [react-collapse](https://github.com/nkbt/react-collapse) and I've 
 * [react-tiny-crossfade](https://github.com/asbjornh/react-tiny-crossfade)
 
 
-## Install
+### Install
 
 ```console
 npm install --save react-tiny-collapse
 ```
 
-or
 
-```console
-yarn add react-tiny-collapse
-```
+### Import
 
-
-## Import
-
-```javascript
+```js
 // in ES5/commonJS
 var TinyCollapse = require("react-tiny-collapse").default;
 
@@ -42,28 +36,61 @@ var TinyCollapse = require("react-tiny-collapse").default;
 import TinyCollapse from "react-tiny-collapse";
 ```
 
-## Props:
+## API
 
-| Prop         | Type          | Default   | Description                                                                       |
-| ------------ | ------------- | --------- | --------------------------------------------------------------------------------- |
-| `animateChildren` | Boolean  | true      | Animates height when children changes (set to `false` when nesting collapses)
-| `children`   | React element |           | Single React element
-| `component`  | String        | "div"     | Type of element used for the wrapper node
-| `duration`   | Number        | 500       | Transition duration (milliseconds)
-| `easing`     | String        | `cubic-bezier(0.3,0,0,1)` | CSS easing
-| `forceInitialAnimation` | Boolean | false | Force animation when TinyCollapse mounts
-| `isOpen`     | Boolean  | true    | Shows or hides the content
-| `unmountClosed` | Boolean | true   | Unmounts children when closed
+**animateChildren** : Boolean = `true`
+<br/>Animates height when children changes (set to `false` when nesting collapses)
 
-#### Example usage:
+---
 
-```js
-<TinyCollapse className="collapse" isOpen={this.state.isOpen}>
+**children** : React element
+<br/>Stuff you want to expand / collapse (one root node only)
+
+---
+
+**className** : String
+
+---
+
+**component** : String = `"div"`
+<br/>Type of element used for the wrapper node
+
+---
+
+**duration** : Number = `500`
+<br/>Transition duration (milliseconds)
+
+---
+
+**easing** : String = `cubic-bezier(0.3,0,0,1)`
+<br/>CSS easing function
+
+---
+
+**forceInitialAnimation** : Boolean = `false`
+<br/>Force animation when TinyCollapse mounts open
+
+---
+
+**isOpen** : Boolean = `false`
+<br/>Shows or hides the content
+
+---
+
+**unmountClosed** : Boolean = `true`
+<br/>Unmounts children when closed
+
+---
+
+## Example usage:
+
+```jsx
+<TinyCollapse isOpen={this.state.isOpen}>
   <div>Content</div>
 </TinyCollapse>
 ```
 
 
-#### Nested TinyCollapse
+## Nested TinyCollapse
 
 When using nested `TinyCollapse` instances it's a good idea to set `animateChildren` to `false` on the outer one. If you don't, the outer one will measure the wrong height which will result in jaggy animation and clipping of content.
