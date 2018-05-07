@@ -25,7 +25,6 @@ class Collapse extends React.Component {
   };
 
   state = {
-    children: this.props.children,
     height: this.props.forceInitialAnimation || !this.props.isOpen ? 0 : null,
     isAnimating: false,
     isMounted: false,
@@ -82,25 +81,30 @@ class Collapse extends React.Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const childrenDidChange = nextProps.children !== prevState.children;
-    const animateChildren =
-      !prevState.isAnimating && nextProps.animateChildren && childrenDidChange;
     const openDidChange = nextProps.isOpen !== prevState.isOpen;
-    const { forceInitialAnimation, isOpen } = nextProps;
     const forceAnimation =
-      !prevState.isMounted && forceInitialAnimation && isOpen;
+      !prevState.isMounted &&
+      nextProps.forceInitialAnimation &&
+      nextProps.isOpen;
 
     return {
-      children: nextProps.children,
       isOpen: nextProps.isOpen,
-      shouldAnimate: animateChildren || openDidChange || forceAnimation
+      shouldAnimate: openDidChange || forceAnimation
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const childrenDidChange = prevProps.children !== this.props.children;
+  getSnapshotBeforeUpdate() {
+    return this.props.isOpen ? this.getHeight() : null;
+  }
 
-    if (this.state.shouldAnimate) {
+  componentDidUpdate(prevProps, prevState, prevHeight) {
+    const newHeight = this.getHeight();
+    const childrenDidChange = prevHeight && newHeight !== prevHeight;
+
+    if (
+      this.state.shouldAnimate ||
+      (childrenDidChange && this.props.animateChildren)
+    ) {
       this.transition();
     } else if (childrenDidChange && !this.state.isAnimating) {
       this.previousHeight = this.getHeight();
