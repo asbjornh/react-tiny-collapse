@@ -46,21 +46,24 @@ class Collapse extends React.Component {
 
     clearTimeout(this.timer);
     cancelAnimationFrame(this.raf);
-    this.setState({ height: this.previousHeight }, () => {
-      this.previousHeight = newHeight;
-      this.raf = requestAnimationFrame(() => {
+    this.setState(
+      { height: this.previousHeight, isAnimating: true, shouldAnimate: false },
+      () => {
+        this.previousHeight = newHeight;
         this.raf = requestAnimationFrame(() => {
-          this.setState({ height: newHeight }, () => {
-            this.timer = setTimeout(() => {
-              this.setState({
-                height: this.props.isOpen ? null : 0,
-                isAnimating: false
-              });
-            }, this.props.duration);
+          this.raf = requestAnimationFrame(() => {
+            this.setState({ height: newHeight }, () => {
+              this.timer = setTimeout(() => {
+                this.setState({
+                  height: this.props.isOpen ? null : 0,
+                  isAnimating: false
+                });
+              }, this.props.duration);
+            });
           });
         });
-      });
-    });
+      }
+    );
   };
 
   componentDidMount() {
@@ -80,26 +83,26 @@ class Collapse extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const childrenDidChange = nextProps.children !== prevState.children;
+    const animateChildren =
+      !prevState.isAnimating && nextProps.animateChildren && childrenDidChange;
     const openDidChange = nextProps.isOpen !== prevState.isOpen;
+    const { forceInitialAnimation, isOpen } = nextProps;
+    const forceAnimation =
+      !prevState.isMounted && forceInitialAnimation && isOpen;
 
     return {
       children: nextProps.children,
-      isAnimating:
-        (!prevState.isMounted &&
-          nextProps.forceInitialAnimation &&
-          nextProps.isOpen) ||
-        (nextProps.animateChildren && childrenDidChange) ||
-        openDidChange,
-      isOpen: nextProps.isOpen
+      isOpen: nextProps.isOpen,
+      shouldAnimate: animateChildren || openDidChange || forceAnimation
     };
   }
 
   componentDidUpdate(prevProps) {
     const childrenDidChange = prevProps.children !== this.props.children;
 
-    if (childrenDidChange && this.state.isAnimating) {
+    if (this.state.shouldAnimate) {
       this.transition();
-    } else if (childrenDidChange) {
+    } else if (childrenDidChange && !this.state.isAnimating) {
       this.previousHeight = this.getHeight();
     }
   }
