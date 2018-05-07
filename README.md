@@ -26,16 +26,6 @@ npm install --save react-tiny-collapse
 ```
 
 
-### Import
-
-```js
-// in ES5/commonJS
-var TinyCollapse = require("react-tiny-collapse").default;
-
-// in ES6
-import TinyCollapse from "react-tiny-collapse";
-```
-
 ## API
 
 **animateChildren** : Boolean = `true`
@@ -77,6 +67,17 @@ import TinyCollapse from "react-tiny-collapse";
 
 ---
 
+**onMeasure** : Function
+<br/>Called whenever TinyCollapse measures height
+
+```jsx
+<TinyCollapse onMeasure={height => doStuff(height)}>
+    <div>Stuff</div>
+</TinyCollapse>
+```
+
+---
+
 **unmountClosed** : Boolean = `true`
 <br/>Unmounts children when closed
 
@@ -85,6 +86,10 @@ import TinyCollapse from "react-tiny-collapse";
 ## Example usage:
 
 ```jsx
+import TinyCollapse from "react-tiny-collapse";
+
+...
+
 <TinyCollapse isOpen={this.state.isOpen}>
   <div>Content</div>
 </TinyCollapse>

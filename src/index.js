@@ -11,6 +11,7 @@ class Collapse extends React.Component {
     easing: PropTypes.string,
     forceInitialAnimation: PropTypes.bool,
     isOpen: PropTypes.bool,
+    onMeasure: PropTypes.func,
     unmountClosed: PropTypes.bool
   };
 
@@ -21,6 +22,7 @@ class Collapse extends React.Component {
     easing: "cubic-bezier(0.3,0,0,1)",
     forceInitialAnimation: false,
     isOpen: false,
+    onMeasure: () => {},
     unmountClosed: true
   };
 
@@ -94,19 +96,24 @@ class Collapse extends React.Component {
   }
 
   getSnapshotBeforeUpdate() {
-    return this.props.isOpen ? this.getHeight() : null;
+    return this.props.isOpen ? this.getHeight() : 0;
   }
 
   componentDidUpdate(prevProps, prevState, prevHeight) {
+    if (this.state.isAnimating) {
+      return;
+    }
+
     const newHeight = this.getHeight();
-    const childrenDidChange = prevHeight && newHeight !== prevHeight;
+    const childrenDidChange = newHeight !== prevHeight;
+    this.props.onMeasure(newHeight);
 
     if (
       this.state.shouldAnimate ||
       (childrenDidChange && this.props.animateChildren)
     ) {
       this.transition();
-    } else if (childrenDidChange && !this.state.isAnimating) {
+    } else if (childrenDidChange) {
       this.previousHeight = this.getHeight();
     }
   }
