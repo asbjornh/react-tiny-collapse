@@ -100,7 +100,7 @@ class Collapse extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, prevHeight) {
-    if (this.state.isAnimating) {
+    if (this.state.isAnimating && !this.state.shouldAnimate) {
       return;
     }
 
