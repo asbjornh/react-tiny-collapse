@@ -47,10 +47,6 @@ npm install --save react-tiny-collapse
 
 ---
 
-**delay** : Number = `0`
-<br/>Delay before expanding / collapsing (milliseconds)
-
----
 
 **duration** : Number = `500`
 <br/>Transition duration (milliseconds)

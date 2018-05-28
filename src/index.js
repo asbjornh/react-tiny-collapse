@@ -7,7 +7,6 @@ class Collapse extends React.Component {
     children: PropTypes.node,
     className: PropTypes.string,
     component: PropTypes.string,
-    delay: PropTypes.number,
     duration: PropTypes.number,
     easing: PropTypes.string,
     forceInitialAnimation: PropTypes.bool,
@@ -20,7 +19,6 @@ class Collapse extends React.Component {
     animateChildren: true,
     component: "div",
     duration: 500,
-    delay: 0,
     easing: "cubic-bezier(0.3,0,0,1)",
     forceInitialAnimation: false,
     isOpen: false,
@@ -35,7 +33,6 @@ class Collapse extends React.Component {
     isOpen: this.props.isOpen
   };
 
-  delayTimer = null;
   previousHeight = 0;
   raf = null;
   timer = null;
@@ -46,31 +43,28 @@ class Collapse extends React.Component {
   };
 
   transition = () => {
-    clearTimeout(this.delayTimer);
+    const newHeight = this.props.isOpen ? this.getHeight() : 0;
+
     clearTimeout(this.timer);
     cancelAnimationFrame(this.raf);
-
-    this.setState({ isAnimating: true, shouldAnimate: false }, () => {
-      this.delayTimer = setTimeout(() => {
-        const newHeight = this.props.isOpen ? this.getHeight() : 0;
-
-        this.setState({ height: this.previousHeight }, () => {
-          this.previousHeight = newHeight;
+    this.setState(
+      { height: this.previousHeight, isAnimating: true, shouldAnimate: false },
+      () => {
+        this.previousHeight = newHeight;
+        this.raf = requestAnimationFrame(() => {
           this.raf = requestAnimationFrame(() => {
-            this.raf = requestAnimationFrame(() => {
-              this.setState({ height: newHeight }, () => {
-                this.timer = setTimeout(() => {
-                  this.setState({
-                    height: this.props.isOpen ? null : 0,
-                    isAnimating: false
-                  });
-                }, this.props.duration);
-              });
+            this.setState({ height: newHeight }, () => {
+              this.timer = setTimeout(() => {
+                this.setState({
+                  height: this.props.isOpen ? null : 0,
+                  isAnimating: false
+                });
+              }, this.props.duration);
             });
           });
         });
-      }, this.props.delay);
-    });
+      }
+    );
   };
 
   componentDidMount() {
@@ -125,7 +119,6 @@ class Collapse extends React.Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.delayTimer);
     clearTimeout(this.timer);
     cancelAnimationFrame(this.raf);
   }
