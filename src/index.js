@@ -47,6 +47,7 @@ class Collapse extends React.Component {
 
     clearTimeout(this.timer);
     cancelAnimationFrame(this.raf);
+    this.isAnimating = true;
     this.setState(
       { height: this.previousHeight, isAnimating: true, shouldAnimate: false },
       () => {
@@ -55,10 +56,15 @@ class Collapse extends React.Component {
           this.raf = requestAnimationFrame(() => {
             this.setState({ height: newHeight }, () => {
               this.timer = setTimeout(() => {
-                this.setState({
-                  height: this.props.isOpen ? null : 0,
-                  isAnimating: false
-                });
+                this.setState(
+                  {
+                    height: this.props.isOpen ? null : 0,
+                    isAnimating: false
+                  },
+                  () => {
+                    this.isAnimating = false;
+                  }
+                );
               }, this.props.duration);
             });
           });
@@ -100,7 +106,7 @@ class Collapse extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, prevHeight) {
-    if (this.state.isAnimating && !this.state.shouldAnimate) {
+    if (this.isAnimating && !this.state.shouldAnimate) {
       return;
     }
 
