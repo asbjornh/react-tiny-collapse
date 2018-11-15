@@ -5,26 +5,24 @@
 
 TinyCollapse is a lightweight component for making animated expand / collapse components. It measures the height and applies it inline so you can add a transition (works when children change too).
 
-
 ### Browser support:
+
 TinyCollapse needs `requestAnimationFrame` in order to do its thing, so make sure to add polyfills if you need to support older browsers (like IE9 and below).
 
-
 ### Why it exists
+
 I really like [react-collapse](https://github.com/nkbt/react-collapse) and I've used it a lot. It does have some drawbacks though, such as being dependent on [react-motion](https://github.com/chenglou/react-motion) and not playing nice with server side rendering (as of v4). I wanted to create a more lightweight, dependency-free alternative.
 
 ### Other Tiny libraries
 
-* [react-tiny-transition](https://github.com/asbjornh/react-tiny-transition)
-* [react-tiny-crossfade](https://github.com/asbjornh/react-tiny-crossfade)
-
+- [react-tiny-transition](https://github.com/asbjornh/react-tiny-transition)
+- [react-tiny-crossfade](https://github.com/asbjornh/react-tiny-crossfade)
 
 ### Install
 
 ```console
 npm install --save react-tiny-collapse
 ```
-
 
 ## API
 
@@ -47,6 +45,8 @@ npm install --save react-tiny-collapse
 
 ---
 
+**componentProps** : Object
+<br/>Additional props passed to the wrapper component
 
 **duration** : Number = `500`
 <br/>Transition duration (milliseconds)
@@ -73,7 +73,7 @@ npm install --save react-tiny-collapse
 
 ```jsx
 <TinyCollapse onMeasure={height => doStuff(height)}>
-    <div>Stuff</div>
+  <div>Stuff</div>
 </TinyCollapse>
 ```
 
@@ -95,7 +95,6 @@ import TinyCollapse from "react-tiny-collapse";
   <div>Content</div>
 </TinyCollapse>
 ```
-
 
 ## Nested TinyCollapse
 

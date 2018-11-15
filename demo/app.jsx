@@ -32,6 +32,7 @@ class App extends Component {
         <button onClick={this.toggleInner}>Toggle inner collapse</button>
         <Collapse
           className="collapse"
+          componentProps={{ id: "some-id" }}
           isOpen={this.state.visible}
           animateChildren={false}
           forceInitialAnimation={false}

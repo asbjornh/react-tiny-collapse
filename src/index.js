@@ -7,6 +7,7 @@ class Collapse extends React.Component {
     children: PropTypes.node,
     className: PropTypes.string,
     component: PropTypes.string,
+    componentProps: PropTypes.object,
     duration: PropTypes.number,
     easing: PropTypes.string,
     forceInitialAnimation: PropTypes.bool,
@@ -137,7 +138,7 @@ class Collapse extends React.Component {
 
     return React.createElement(
       this.props.component,
-      {
+      Object.assign({}, this.props.componentProps, {
         className: this.props.className,
         onTransitionEnd: this.onTransitionEnd,
         ref: el => (this.wrapper = el),
@@ -151,7 +152,7 @@ class Collapse extends React.Component {
               ? `height ${this.props.duration}ms ${this.props.easing}`
               : null
         }
-      },
+      }),
       shouldMount && this.props.children
     );
   }
