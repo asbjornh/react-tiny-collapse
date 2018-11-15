@@ -48,6 +48,8 @@ npm install --save react-tiny-collapse
 **componentProps** : Object
 <br/>Additional props passed to the wrapper component
 
+---
+
 **duration** : Number = `500`
 <br/>Transition duration (milliseconds)
 
