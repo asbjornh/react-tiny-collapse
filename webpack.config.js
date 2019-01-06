@@ -1,24 +1,23 @@
 const path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 
 module.exports = () => {
   return {
     entry: {
-      index: ["./demo/index.js"]
+      demo: "./demo/index.js"
     },
     output: {
       path: path.resolve(__dirname + "/build"),
       filename: "[name].js",
-      libraryTarget: "umd"
+      libraryTarget: "umd",
+      globalObject: "this"
     },
     devServer: {
       stats: "minimal",
       inline: false
     },
-    node: {
-      fs: "empty"
-    },
+    mode: "development",
     module: {
       rules: [
         {
@@ -41,14 +40,15 @@ module.exports = () => {
         {
           test: /\.css/,
           exclude: /node_modules/,
-          use: ExtractTextPlugin.extract([
+          loaders: [
+            MiniCssExtractPlugin.loader,
             {
               loader: "css-loader",
               options: {
                 importLoaders: 1
               }
             }
-          ])
+          ]
         }
       ]
     },
@@ -56,9 +56,9 @@ module.exports = () => {
       extensions: [".js", ".jsx"]
     },
     plugins: [
-      new ExtractTextPlugin("[name].[chunkhash].css"),
+      new MiniCssExtractPlugin({ filename: "[name].[chunkhash].css" }),
       new StaticSiteGeneratorPlugin({
-        entry: "index",
+        entry: "demo",
         paths: ["/"]
       })
     ]
