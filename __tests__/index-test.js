@@ -4,7 +4,7 @@ jest.disableAutomock().useRealTimers();
 
 const React = require("react");
 const ReactDOM = require("react-dom");
-const TinyCollapse = require("..").default;
+const TinyCollapse = require("../lib").default;
 const TestUtils = require("react-dom/test-utils");
 
 global.requestAnimationFrame = callback => {
