@@ -9,7 +9,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -fr lib/ && babel src --out-dir lib --ignore='__tests__'",
+    "build": "rm -fr lib/ && babel src --out-dir lib",
     "test": "jest --verbose",
     "pub": "npm test && npm build && npm publish",
     "dev": "webpack-dev-server --content-base dist/"
