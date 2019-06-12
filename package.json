@@ -1,17 +1,17 @@
 {
   "name": "react-tiny-collapse",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Create expanding / collapsing sections in React with with css transitions",
   "main": "lib/index.js",
   "files": [
     "lib",
+    "CHANGELOG.md",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
     "build": "rm -fr lib/ && babel src --out-dir lib",
     "test": "jest --verbose",
-    "pub": "npm test && npm build && npm publish",
     "dev": "webpack-dev-server --content-base dist/"
   },
   "repository": {
