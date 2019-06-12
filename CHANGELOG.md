@@ -1,0 +1,13 @@
+# 1.0.0
+
+- Adds changelog! 🙈
+- Adds support for using `style` in `componentProps`. Inline styles set by `react-tiny-collapse` will override user styles when there's a collision.
+- Adds support for using function components using `React.forwardRef` as `component`
+
+## BREAKING CHANGES:
+
+- Renames `unmountClosed` to `unmountChildren`
+- Makes `false` the default value for `unmountChildren`
+- Makes `false` the default value for `animateChildren`
+
+`unmountClosed` was a confusing name, and options that default to `true` are not nice.
