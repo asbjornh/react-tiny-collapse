@@ -26,7 +26,7 @@ npm install --save react-tiny-collapse
 
 ## API
 
-**animateChildren** : Boolean = `true`
+**animateChildren** : Boolean = `false`
 <br/>Animates height when children changes (set to `false` when nesting collapses)
 
 ---
@@ -83,7 +83,7 @@ npm install --save react-tiny-collapse
 
 ---
 
-**unmountChildren** : Boolean = `true`
+**unmountChildren** : Boolean = `false`
 <br/>Unmounts children when closed
 
 ---

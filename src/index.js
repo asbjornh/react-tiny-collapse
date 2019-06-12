@@ -18,14 +18,15 @@ class Collapse extends React.Component {
   };
 
   static defaultProps = {
-    animateChildren: true,
+    animateChildren: false,
     component: "div",
+    componentProps: {},
     duration: 500,
     easing: "cubic-bezier(0.3,0,0,1)",
     forceInitialAnimation: false,
     isOpen: false,
     onMeasure: () => {},
-    unmountChildren: true
+    unmountChildren: false
   };
 
   state = {
