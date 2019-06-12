@@ -6,7 +6,8 @@ class Collapse extends React.Component {
     animateChildren: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
-    component: PropTypes.string,
+    // NOTE: PropTypes.object because React.forwardRef returns an object instead of a function:
+    component: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     componentProps: PropTypes.object,
     duration: PropTypes.number,
     easing: PropTypes.string,

@@ -40,8 +40,9 @@ npm install --save react-tiny-collapse
 
 ---
 
-**component** : String = `"div"`
+**component** : String | Function component = `"div"`
 <br/>Type of element used for the wrapper node
+<br/>If a function is used it _must_ use `React.forwardRef`
 
 ---
 

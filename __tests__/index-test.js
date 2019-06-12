@@ -86,13 +86,26 @@ describe("TinyCollapse", () => {
     expect(node.getAttribute("class")).toBe("collapse");
   });
 
-  it("should render with provided component", () => {
+  it("should render with string component", () => {
     const testComponent = TestUtils.renderIntoDocument(
       <TinyCollapse component="h2" />
     );
     const node = ReactDOM.findDOMNode(testComponent);
 
     expect(node.tagName).toBe("H2");
+  });
+
+  it("should render with function component", () => {
+    const Comp = React.forwardRef(({ children }, ref) => (
+      <em ref={ref}>{children}</em>
+    ));
+
+    const testComponent = TestUtils.renderIntoDocument(
+      <TinyCollapse component={Comp} />
+    );
+    const node = ReactDOM.findDOMNode(testComponent);
+
+    expect(node.tagName).toBe("EM");
   });
 
   it("should apply correct inline styles", () => {
