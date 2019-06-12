@@ -47,6 +47,7 @@ npm install --save react-tiny-collapse
 
 **componentProps** : Object
 <br/>Additional props passed to the wrapper component
+<br/>If `componentProps` includes a `style` property, some individual styles may be overridden by the inline styles set by `react-tiny-collapse`.
 
 ---
 

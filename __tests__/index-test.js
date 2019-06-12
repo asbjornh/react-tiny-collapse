@@ -140,4 +140,34 @@ describe("TinyCollapse", () => {
       }, 100);
     });
   });
+
+  it("should apply user styles but preserve animation styles", () => {
+    class TestComponent extends React.Component {
+      render() {
+        return (
+          <TinyCollapse
+            isOpen={false}
+            componentProps={{
+              style: {
+                height: 1000,
+                marginTop: "100px",
+                overflow: "visible",
+                visibility: "visible"
+              }
+            }}
+            unmountChildren={false}
+          >
+            <View>{"foo"}</View>
+          </TinyCollapse>
+        );
+      }
+    }
+
+    const testComponent = TestUtils.renderIntoDocument(<TestComponent />);
+    const node = ReactDOM.findDOMNode(testComponent);
+
+    expect(node.getAttribute("style")).toBe(
+      "height: 0px; margin-top: 100px; overflow: hidden; visibility: hidden;"
+    );
+  });
 });

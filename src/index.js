@@ -143,6 +143,7 @@ class Collapse extends React.Component {
         onTransitionEnd: this.onTransitionEnd,
         ref: el => (this.wrapper = el),
         style: {
+          ...this.props.componentProps.style,
           height: this.state.height,
           overflow: isAnimating || !isOpen || initiallyHidden ? "hidden" : null,
           visibility:
