@@ -83,7 +83,7 @@ npm install --save react-tiny-collapse
 
 ---
 
-**unmountClosed** : Boolean = `true`
+**unmountChildren** : Boolean = `true`
 <br/>Unmounts children when closed
 
 ---

@@ -14,7 +14,7 @@ class Collapse extends React.Component {
     forceInitialAnimation: PropTypes.bool,
     isOpen: PropTypes.bool,
     onMeasure: PropTypes.func,
-    unmountClosed: PropTypes.bool
+    unmountChildren: PropTypes.bool
   };
 
   static defaultProps = {
@@ -25,7 +25,7 @@ class Collapse extends React.Component {
     forceInitialAnimation: false,
     isOpen: false,
     onMeasure: () => {},
-    unmountClosed: true
+    unmountChildren: true
   };
 
   state = {
@@ -133,8 +133,8 @@ class Collapse extends React.Component {
 
   render() {
     const { isAnimating, isMounted } = this.state;
-    const { forceInitialAnimation, isOpen, unmountClosed } = this.props;
-    const shouldMount = unmountClosed ? isOpen || isAnimating : true;
+    const { forceInitialAnimation, isOpen, unmountChildren } = this.props;
+    const shouldMount = unmountChildren ? isOpen || isAnimating : true;
     const initiallyHidden = !isMounted && forceInitialAnimation && isOpen;
 
     return React.createElement(

@@ -47,24 +47,9 @@ describe("TinyCollapse", () => {
     expect(elements.length).toBe(1);
   });
 
-  it("should not render children initially when closed", () => {
+  it("should render children with unmountChildren === false", () => {
     const testComponent = TestUtils.renderIntoDocument(
-      <TinyCollapse isOpen={false}>
-        <View>{"foo"}</View>
-      </TinyCollapse>
-    );
-
-    const elements = TestUtils.scryRenderedComponentsWithType(
-      testComponent,
-      View
-    );
-
-    expect(elements.length).toBe(0);
-  });
-
-  it("should always render children with unmountClosed === true", () => {
-    const testComponent = TestUtils.renderIntoDocument(
-      <TinyCollapse isOpen={false} unmountClosed={false}>
+      <TinyCollapse isOpen={false} unmountChildren={false}>
         <View>{"foo"}</View>
       </TinyCollapse>
     );
@@ -75,6 +60,21 @@ describe("TinyCollapse", () => {
     );
 
     expect(elements.length).toBe(1);
+  });
+
+  it("should not render children with unmountChildren === true", () => {
+    const testComponent = TestUtils.renderIntoDocument(
+      <TinyCollapse isOpen={false} unmountChildren={true}>
+        <View>{"foo"}</View>
+      </TinyCollapse>
+    );
+
+    const elements = TestUtils.scryRenderedComponentsWithType(
+      testComponent,
+      View
+    );
+
+    expect(elements.length).toBe(0);
   });
 
   it("should apply classname", () => {
@@ -116,7 +116,7 @@ describe("TinyCollapse", () => {
 
       render() {
         return (
-          <TinyCollapse isOpen={this.state.isOpen} unmountClosed={false}>
+          <TinyCollapse isOpen={this.state.isOpen} unmountChildren={false}>
             <View>{"foo"}</View>
           </TinyCollapse>
         );
