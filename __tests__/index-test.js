@@ -138,9 +138,9 @@ describe("TinyCollapse", () => {
           },
           () => {
             setTimeout(() => {
-              // In reality the height should be greater than 0 but there is no real DOM to measure here. This should also include the transition styles, but for some reason TestUtils donesn't seem to want to print transition or animation styles.
+              // In reality the height should be greater than 0 but there is no real DOM to measure here.
               expect(node.getAttribute("style")).toBe(
-                "height: 0px; overflow: hidden;"
+                "height: 0px; overflow: hidden; transition: height 500ms cubic-bezier(0.3,0,0,1);"
               );
 
               setTimeout(() => {
