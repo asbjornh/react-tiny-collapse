@@ -1,6 +1,6 @@
 {
   "name": "react-tiny-collapse",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Create expanding / collapsing sections in React with with css transitions",
   "main": "lib/index.js",
   "files": [
@@ -57,9 +57,9 @@
     "jest-cli": "^23.6.0",
     "mini-css-extract-plugin": "^0.5.0",
     "prop-types": "^15.6.2",
-    "react": "^16.7.0",
+    "react": "^17.0.0",
     "react-addons-test-utils": "^15.1.0",
-    "react-dom": "^16.7.0",
+    "react-dom": "^17.0.0",
     "static-site-generator-webpack-plugin": "^3.4.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.3",
@@ -68,8 +68,8 @@
   },
   "peerDependencies": {
     "prop-types": "^15.6.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react": "^16.7.0 || ^17.0.0",
+    "react-dom": "^16.7.0 || ^17.0.0"
   },
   "jest": {
     "rootDir": "",
