@@ -1,11 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import ReactDOMServer from "react-dom/server";
 
 import App from "./app";
 
 if (typeof document !== "undefined") {
-  ReactDOM.render(<App />, document.getElementById("mount-point"));
+	const root = createRoot(document.getElementById("mount-point"));
+	root.createRoot(<App />);
 }
 
 export default ({ webpackStats }) => {

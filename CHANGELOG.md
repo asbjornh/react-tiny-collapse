@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+Updates `react` and `react-dom` to 18.1.0
+
 ## 1.1.0
 
 Adds `react@^17.0.0` and `react-dom@^17.0.0` as peer dependencies
