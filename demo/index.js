@@ -1,12 +1,11 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom";
 import ReactDOMServer from "react-dom/server";
 
 import App from "./app";
 
 if (typeof document !== "undefined") {
-	const root = createRoot(document.getElementById("mount-point"));
-	root.createRoot(<App />);
+  ReactDOM.render(<App />, document.getElementById("mount-point"));
 }
 
 export default ({ webpackStats }) => {
@@ -31,8 +30,10 @@ export default ({ webpackStats }) => {
         <div id="mount-point">
           <App />
         </div>
-        {js.map((file, index) => <script key={index} src={`/${file}`} />)}
+				{js.map((file, index) => (
+					<script key={index} src={`/${file}`} />
+				))}
       </body>
-    </html>
+		</html>,
   )}`;
 };
