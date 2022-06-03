@@ -30,10 +30,10 @@ export default ({ webpackStats }) => {
         <div id="mount-point">
           <App />
         </div>
-				{js.map((file, index) => (
-					<script key={index} src={`/${file}`} />
-				))}
+			{js.map((file, index) => (
+				<script key={index} src={`/${file}`} />
+			))}
       </body>
-		</html>,
+	</html>,
   )}`;
 };
