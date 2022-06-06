@@ -1,6 +1,6 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = () => {
   return {
@@ -57,9 +57,8 @@ module.exports = () => {
     },
     plugins: [
       new MiniCssExtractPlugin({ filename: "[name].[chunkhash].css" }),
-      new StaticSiteGeneratorPlugin({
-        entry: "demo",
-        paths: ["/"]
+      new HtmlWebpackPlugin({
+        template: "demo/index.html"
       })
     ]
   };
