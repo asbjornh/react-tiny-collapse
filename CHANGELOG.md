@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0
+
+- BREAKING: Removes `TinyCollapse.propTypes`, removes `prop-types` as peer dependency
+- Adds TypeScript typings
+
 ## 1.2.0
 
 Adds `react@^18.0.0` and `react-dom@^18.0.0` as peer dependencies

@@ -1,22 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 class Collapse extends React.Component {
-  static propTypes = {
-    animateChildren: PropTypes.bool,
-    children: PropTypes.node,
-    className: PropTypes.string,
-    // NOTE: PropTypes.object because React.forwardRef returns an object instead of a function:
-    component: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    componentProps: PropTypes.object,
-    duration: PropTypes.number,
-    easing: PropTypes.string,
-    forceInitialAnimation: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    onMeasure: PropTypes.func,
-    unmountChildren: PropTypes.bool
-  };
-
   static defaultProps = {
     animateChildren: false,
     component: "div",
